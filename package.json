@@ -1,0 +1,11 @@
+{
+  "name": "mean-term-2",
+  "version": "1.0.0",
+  "description": "A chatroom application made with NodeJS and Socket.io",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lara Cook",
+  "license": "ISC"
+}
