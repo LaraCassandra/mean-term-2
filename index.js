@@ -18,8 +18,6 @@ var databaseOfUser = [
   },
 ];
 
-var timeStamp = moment();
-
 //
 //
 //
@@ -32,9 +30,14 @@ io.on("connection", (socket) => {
 
   socket.on("chatroom", (message) => {
     console.log(`This was a message from chatroom: ${message}`);
+
+    var timeStamp = moment().format("h:mm a");
+    console.log(timeStamp);
+
     var emoji = "&#128522;";
     var res = message.replace(":)", emoji);
-    io.emit("chatroom", res);
+
+    io.emit("chatroom", res + " " + "<p>" + timeStamp + "</p>");
   });
 });
 
@@ -133,6 +136,7 @@ var handleFormPost = (request, response) => {
 //
 //
 // Login Functions
+//Login Get
 var handleLoginGet = (request, response) => {
   response.writeHead(200, { "Content-Type": "text/html" });
   fs.readFile("templates/login.html", "utf8", function (err, data) {
@@ -144,6 +148,7 @@ var handleLoginGet = (request, response) => {
   });
 };
 
+//Login Post
 var handleLoginPost = (request, response) => {
   response.writeHead(200, { "Content-Type": "text/html" });
 
