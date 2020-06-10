@@ -1,127 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Room</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
 
+    <style>
+      .messages {
+        height: 500px;
+        background-color: rgb(216, 216, 216);
+        margin: 50px 0px 20px 0px;
+      }
 
-<head>
+      #messages {
+        list-style: none;
+        padding: 0px;
+      }
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+      .message {
+        background-color: #808080;
+        color: #fff;
+        padding: 10px;
+        margin: 5px 0px;
+        border-radius: 50px;
+      }
 
-  <style>
+      .btn {
+        margin-left: 10px;
+      }
+    </style>
+  </head>
 
-.messages {
-      height: 500px;
-      background-color: rgb(216, 216, 216);
-      margin: 50px 0px 20px 0px;
-    }
+  <body>
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container">
+        <span class="navbar-brand mb-0 h1">Chat Room</span>
+      </div>
+    </nav>
 
-    #messages {
-      list-style: none;
-      display: block;
-      padding: 0px;
-    }
+    <h1>Hi ${username}</h1>
 
-    .message {
-      background-color: #e90052;
-      color: #fff;
-      padding: 10px;
-      margin-bottom: 5px;
-    }
-
-    .btn {
-      margin-left: 10px;
-    }
-
-  </style>
-
-</head>
-
-
-<body>
-
-  <nav class="navbar navbar-dark bg-dark" >
     <div class="container">
-      <span class="navbar-brand mb-0 h1">Chat Room</span>
-    </div>
-  </nav>
-
-  <div>
-    <form class="form-inline" method="POST">
-      <label for="username">Username:</label>
-      <input type="text" name="username" class="form-control">
-      <label for="lastname">Last Name:</label>
-      <input type="text" name="lastname" class="form-control">
-      <button type="submit" class="btn btn-secondary mb-2">Submit</button>
-    </form>
-  </div>
-
-
-  <div class="container">
-    <div class="row">
-      <div class="messages rounded-sm col-md-6">
-        <ul id="messages">
-
-        </ul>
+      <div class="row">
+        <div class="messages rounded-sm col-md-6">
+          <ul id="messages"></ul>
+        </div>
       </div>
     </div>
-  </div>
 
+    <div>
+      <form class="form-inline" onsubmit="event.preventDefault(); sendMsg();">
+        <div class="form-group mb-2">
+          <input
+            type="text"
+            class="form-control"
+            id="message"
+            placeholder="Enter your message"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+      </form>
+    </div>
 
-  <div>
-    <form class="form-inline" onsubmit="event.preventDefault(); sendMsg();">
-      <div class="form-group mb-2">
-        <input type="text" class="form-control" id="message" placeholder="Enter your message">
-      </div>
-      <button type="submit" class="btn btn-primary mb-2">Submit</button>
-    </form>
-  </div>
-
-
-
-
-
-
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
 
     <script src="http://localhost:8888/socket.io.js"></script>
 
-    
-  <script>
+    <script>
+      const socket = io("http://localhost:8888", { transports: ["websocket"] });
+      socket.on("clientConnected", function (message) {
+        console.log(message);
+      });
 
-    const socket = io('http://localhost:8888', {transports: ['websocket']});
-    socket.on('clientConnected', function(msg) {
-      console.log(msg);
-    })
+      socket.on("chatroom", function (message) {
+        console.log(`from server ${message}`);
+        // TODO: populate the chat message area
+        $("#messages").append("<li class='message'>" + message + "</li>");
+      });
 
-    socket.on('chatroom', function(msg) {
-      console.log(`from server ${msg}`);
-      // TODO: populate the chat message area
-      $('#messages').append("<li class='message'>" + msg + "</li>")
-    })
+      socket.on("broadcast", function (message) {
+        console.log(`This is the message that was sent: ${message}`);
+      });
 
-    socket.on('broadcast', function(msg) {
-      console.log(`This is the message that was sent: ${msg}`);
-    })
+      function sendMsg() {
+        var message = document.getElementById("message").value;
+        console.log(`This is from HTML ${message}`);
+        socket.emit("chatroom", message);
+      }
 
-    function sendMsg() {
-      var message = document.getElementById("message").value;
-      console.log(`This is from HTML ${message}`);
-      socket.emit('chatroom', message)
-    }
-
-    function broadcast() {
-      socket.emit('broadcast','This is a broadcast message')
-    }
-  </script>
-
-</body>
-
-
+      function broadcast() {
+        socket.emit("broadcast", "This is a broadcast message");
+      }
+    </script>
+  </body>
 </html>
