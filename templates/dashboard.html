@@ -8,14 +8,44 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     />
+
+    <style>
+      #messageItem {
+        background-color: red;
+      }
+    </style>
   </head>
   <body>
+    <!--  ONLINE USERS  -->
     <div class="container">
       <h1>Dashboard</h1>
       <h3>Hello ${username}</h3>
       <ul style="list-style: none;">
         ${loggedUser}
       </ul>
+    </div>
+
+    <!-- CHATROOM  -->
+    <div class="container">
+      <div class="row">
+        <div class="rounded-sm col-md-6" id="messageArea">
+          <ul id="messageItem"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-group mb-2">
+        <input
+          type="text"
+          class="form-control"
+          id="message"
+          placeholder="Enter your message"
+        />
+      </div>
+      <button onclick="sendMsg()" class="btn btn-primary mb-2">
+        Send
+      </button>
     </div>
 
     <script
@@ -33,5 +63,31 @@
       integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
       crossorigin="anonymous"
     ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+
+    <script>
+      const socket = io("http://localhost:8888", { transports: ["websocket"] });
+      socket.on("clientConnected", function (msg) {
+        console.log(msg);
+        var messageBox = (document.getElementById(
+          "messageItem"
+        ).innerHTML = msg);
+      });
+      //socket.on("news", (data) => {
+      // console.log(data);
+      //  socket.emit("my other event", { my: "data" });
+      //});
+
+      socket.on("chatroom", (msg) => {
+        $("#messageItem").append("<li class='messageOutput'>" + msg + "</li>");
+      });
+
+      function sendMsg(e) {
+        //e.preventDefault();
+        var message = document.getElementById("message").value;
+        socket.emit("chatroom", message);
+      }
+    </script>
   </body>
 </html>

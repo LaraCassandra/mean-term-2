@@ -42,8 +42,6 @@
       </div>
     </nav>
 
-    <h1>Hi ${username}</h1>
-
     <div class="container">
       <div class="row">
         <div class="messages rounded-sm col-md-6">
@@ -77,22 +75,21 @@
       crossorigin="anonymous"
     ></script>
 
-    <script src="http://localhost:8888/socket.io.js"></script>
-
+    <script src="http://localhost:8080/socket.io.js"></script>
     <script>
-      const socket = io("http://localhost:8888", { transports: ["websocket"] });
-      socket.on("clientConnected", function (message) {
-        console.log(message);
+      const socket = io("http://localhost:8080", { transports: ["websocket"] });
+      socket.on("clientConnected", function (msg) {
+        console.log(msg);
       });
 
-      socket.on("chatroom", function (message) {
-        console.log(`from server ${message}`);
+      socket.on("chatroom", function (msg) {
+        console.log(`from server ${msg}`);
         // TODO: populate the chat message area
-        $("#messages").append("<li class='message'>" + message + "</li>");
+        $("#messages").append("<li class='message'>" + msg + "</li>");
       });
 
-      socket.on("broadcast", function (message) {
-        console.log(`This is the message that was sent: ${message}`);
+      socket.on("broadcast", function (msg) {
+        console.log(`This is the message that was sent: ${msg}`);
       });
 
       function sendMsg() {

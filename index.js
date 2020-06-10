@@ -1,9 +1,10 @@
 const http = require("http");
 const queryString = require("querystring");
 const server = http.createServer();
-
 var fs = require("fs");
 const template = require("es6-template-strings");
+const moment = require("moment");
+
 var loggedInUsers = [];
 
 var databaseOfUser = [
@@ -11,7 +12,13 @@ var databaseOfUser = [
     username: "Lara",
     password: "123",
   },
+  {
+    username: "David",
+    password: "123",
+  },
 ];
+
+var timeStamp = moment();
 
 //
 //
@@ -20,18 +27,15 @@ var databaseOfUser = [
 var io = require("socket.io")(server);
 
 io.on("connection", (socket) => {
-  console.log("a user connected"),
-    io.emit("clientConnected", "Hello, you have connected to the chat server!");
+  console.log("a user connected");
+  io.emit("clientConnected", "You have connected to the chat server!");
 
-  socket.on("chatroom", function (message) {
-    console.log(`This is the message that was sent ${message}`);
-    io.emit("chatroom", message);
+  socket.on("chatroom", (message) => {
+    console.log(`This was a message from chatroom: ${message}`);
+    var emoji = "&#128522;";
+    var res = message.replace(":)", emoji);
+    io.emit("chatroom", res);
   });
-
-  /*socket.on('broadcast', function(message){
-    console.log(`This was the message that was sent ${message}`)
-    socket.broadcast.emit('broadcast', 'Thank you for your message');
-  }) */
 });
 
 var simpleRouter = (request) => {
@@ -62,7 +66,7 @@ var simpleRouter = (request) => {
     ) {
       return route.handler;
     }
-    console.log("no route");
+    //console.log("no route");
   }
   return null;
 };
@@ -128,7 +132,7 @@ var handleFormPost = (request, response) => {
 //
 //
 //
-// Login Handle Functions
+// Login Functions
 var handleLoginGet = (request, response) => {
   response.writeHead(200, { "Content-Type": "text/html" });
   fs.readFile("templates/login.html", "utf8", function (err, data) {
@@ -155,6 +159,7 @@ var handleLoginPost = (request, response) => {
     var post = queryString.parse(bodyString);
 
     var foundUser = false;
+    var inLoggedIn = false;
 
     for (dbUser of databaseOfUser) {
       if (
@@ -162,7 +167,15 @@ var handleLoginPost = (request, response) => {
         dbUser.password === post.password
       ) {
         foundUser = true;
-        loggedInUsers.push(post);
+
+        loggedInUsers.forEach((u) => {
+          if (u.username === post.username) {
+            inLoggedIn = true;
+          }
+        });
+        if (!inLoggedIn) {
+          loggedInUsers.push(post);
+        }
         response.writeHead(200, { "Content-Type": "text/html" });
         fs.readFile("templates/dashboard.html", "utf8", (err, data) => {
           if (err) {
