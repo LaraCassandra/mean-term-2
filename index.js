@@ -217,10 +217,11 @@ const listLoginUsers = (loggedUser) => {
   var list = "";
   for (user of loggedUser) {
     list += `<li>
-            <h4>${user.username}</h4>
+            <h6>${user.username}</h6>
           </li>`;
   }
   return list;
+  location.reload();
 };
 
 //

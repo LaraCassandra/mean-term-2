@@ -21,41 +21,78 @@
       .navbar h4 {
         color: white;
       }
+      .logbtn {
+        float: right;
+        background-color: white;
+        border: none;
+        color: lightgray;
+        transition: 0.5s;
+      }
+      .logbtn:hover {
+        background-color: white;
+        color: black;
+        font-size: larger;
+        transition: 0.5s;
+      }
       .onlineUsers {
         float: left;
         height: 90vh;
         width: 20%;
-        background-color: #f9f9f9;
-        padding: 50px 0 0 50px;
+        background: white;
+        box-shadow: 3px 3px 10px gray;
+        padding: 0;
+      }
+      .search {
+        height: 50px;
+        width: 303px;
+        margin: 0 0 20px 0;
+        padding: 0 20px;
+        border: none;
+        border-radius: 0;
+        background-color: #f3f3f3;
+      }
+      .searchbtn {
+        margin-top: -5px;
+        border-radius: 0;
+        border: none;
+        height: 50px;
+        background: #76c2c9;
+        transition: 0.5s;
+      }
+      .userList li {
+        margin-bottom: 10px;
+        padding: 15px 20px;
+        background: #76c2c9;
+        color: white;
+        border-top: 5px solid white;
+      }
+      .user {
+        padding-left: 50px;
+        margin-bottom: 10px;
       }
       .chatroom {
         float: left;
-        width: 80%;
-        margin: 35px 0 0 50px;
-        padding: 40px 0 40px 0;
+        margin: 40px 0 0 50px;
+        padding: 40px 40px;
         height: 100%;
         width: 75%;
         background-color: white;
-        box-shadow: 3px 3px 10px lightgray;
+        box-shadow: 3px 3px 10px gray;
         border-radius: 10px;
       }
-      li {
-        text-decoration: none;
-        padding: 10px 0px 0px 50px;
-      }
       #messageArea {
-        height: 550px;
-        margin-top: 10px;
-        padding: 0 0px 10px 0;
+        height: 500px;
+        margin-top: 20px;
+        background-color: white;
       }
       .messageOutput {
-        border-top: 5px solid #f9f9f9;
+        height: auto;
         list-style: none;
+        padding: 0px 20px;
       }
       .messageOutput p {
         color: gray;
-        float: right;
-        padding-right: 50px;
+        font-weight: 100;
       }
       #messageItem {
         padding: 10px 0 10px 0px;
@@ -70,7 +107,6 @@
         border: none;
         background: linear-gradient(130deg, #07a3b2, #d9ecc7);
         background-size: 150%;
-        margin-top: 20px;
         transition: 0.5s;
       }
       .sendbtn:hover {
@@ -79,6 +115,7 @@
         transition: 0.5s;
       }
       .textBox {
+        height: 80px;
         border: 1px solid lightgray;
         position: relative;
         border-radius: 0;
@@ -89,39 +126,42 @@
   <body>
     <!-- NAV BAR  -->
     <nav class="navbar">
-      <h4>Chatroom</h4>
+      <h4>ChatterBox</h4>
+      <button class="btn btn-primary logbtn">Logout</button>
     </nav>
 
     <!--  ONLINE USERS  -->
     <div class="container onlineUsers">
-      <h1>Users</h1>
-      <ul style="list-style: none;">
-        ${loggedUser}
-      </ul>
+      <input type="text" placeholder="Search users" class="search" />
+      <button class="btn btn-secondary searchbtn">
+        Search
+      </button>
+      <div class="userList">
+        <h4 class="user">Users</h4>
+        <ul style="list-style: none;">
+          ${loggedUser}
+        </ul>
+      </div>
     </div>
 
     <!-- CHATROOM  -->
     <div class="chatroom">
-      <div class="container">
-        <h3>Hello ${username}</h3>
-        <div class="" id="messageArea">
-          <ul id="messageItem"></ul>
-        </div>
+      <h3>Welcome back to the Chatterbox room, ${username}</h3>
+      <div class="" id="messageArea">
+        <ul id="messageItem"></ul>
       </div>
 
-      <div class="container">
-        <div class="form-group mb-2">
-          <input
-            type="text"
-            class="form-control textBox"
-            id="message"
-            placeholder="Enter your message"
-          />
-        </div>
-        <button onclick="sendMsg()" class="btn btn-primary sendbtn">
-          Send
-        </button>
+      <div class="form-group mb-2">
+        <input
+          type="text"
+          class="form-control textBox"
+          id="message"
+          placeholder="Enter your message"
+        />
       </div>
+      <button onclick="sendMsg()" class="btn btn-primary sendbtn">
+        Send
+      </button>
     </div>
 
     <script
