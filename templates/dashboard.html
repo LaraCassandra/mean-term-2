@@ -10,42 +10,118 @@
     />
 
     <style>
+      body {
+        background-color: #f3f3f3;
+      }
+      .navbar {
+        height: 90px;
+        padding-left: 150px;
+        background-image: linear-gradient(130deg, #07a3b2, #d9ecc7);
+      }
+      .navbar h4 {
+        color: white;
+      }
+      .onlineUsers {
+        float: left;
+        height: 90vh;
+        width: 20%;
+        background-color: #f9f9f9;
+        padding: 50px 0 0 50px;
+      }
+      .chatroom {
+        float: left;
+        width: 80%;
+        margin: 35px 0 0 50px;
+        padding: 40px 0 40px 0;
+        height: 100%;
+        width: 75%;
+        background-color: white;
+        box-shadow: 3px 3px 10px lightgray;
+        border-radius: 10px;
+      }
+      li {
+        text-decoration: none;
+        padding: 10px 0px 0px 50px;
+      }
+      #messageArea {
+        height: 550px;
+        margin-top: 10px;
+        padding: 0 0px 10px 0;
+      }
+      .messageOutput {
+        border-top: 5px solid #f9f9f9;
+        list-style: none;
+      }
+      .messageOutput p {
+        color: gray;
+        float: right;
+        padding-right: 50px;
+      }
       #messageItem {
-        background-image: linear-gradient(to right, red, blue);
+        padding: 10px 0 10px 0px;
+        background-color: #f3f3f3;
+        margin-bottom: 10px;
+        color: black;
+      }
+      .sendbtn {
+        display: block;
+        width: 100%;
+        height: 50px;
+        border: none;
+        background: linear-gradient(130deg, #07a3b2, #d9ecc7);
+        background-size: 150%;
+        margin-top: 20px;
+        transition: 0.5s;
+      }
+      .sendbtn:hover {
+        background-position: right;
+        font-size: large;
+        transition: 0.5s;
+      }
+      .textBox {
+        border: 1px solid lightgray;
+        position: relative;
+        border-radius: 0;
+        background-color: white;
       }
     </style>
   </head>
   <body>
+    <!-- NAV BAR  -->
+    <nav class="navbar">
+      <h4>Chatroom</h4>
+    </nav>
+
     <!--  ONLINE USERS  -->
-    <div class="container">
-      <h1>Dashboard</h1>
-      <h3>Hello ${username}</h3>
+    <div class="container onlineUsers">
+      <h1>Users</h1>
       <ul style="list-style: none;">
         ${loggedUser}
       </ul>
     </div>
 
     <!-- CHATROOM  -->
-    <div class="container">
-      <div class="row">
-        <div class="rounded-sm col-md-6" id="messageArea">
+    <div class="chatroom">
+      <div class="container">
+        <h3>Hello ${username}</h3>
+        <div class="" id="messageArea">
           <ul id="messageItem"></ul>
         </div>
       </div>
-    </div>
 
-    <div>
-      <div class="form-group mb-2">
-        <input
-          type="text"
-          class="form-control"
-          id="message"
-          placeholder="Enter your message"
-        />
+      <div class="container">
+        <div class="form-group mb-2">
+          <input
+            type="text"
+            class="form-control textBox"
+            id="message"
+            placeholder="Enter your message"
+          />
+        </div>
+        <button onclick="sendMsg()" class="btn btn-primary sendbtn">
+          Send
+        </button>
       </div>
-      <button onclick="sendMsg()" class="btn btn-primary mb-2">
-        Send
-      </button>
     </div>
 
     <script
