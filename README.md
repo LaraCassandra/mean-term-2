@@ -30,6 +30,10 @@ After downloading the code, navigate to the project folder in the console. Alter
 $ npm install
 ```
 
+![alt text](https://github.com/LaraCassandra/mean-term-2/blob/master/public/img/OpenTerminal.jpg "Open Terminal")
+
+![alt text](https://github.com/LaraCassandra/mean-term-2/blob/master/public/img/InstallDependencies.JPG "Install Dependencies")
+
 ## **Run**
 
 Once the dependencies are install, you need to start the application so that you are able to open it in your browser.
@@ -42,6 +46,8 @@ or
 
 $ npm start
 ```
+
+![alt text](https://github.com/LaraCassandra/mean-term-2/blob/master/public/img/RunApp.JPG "Run Application")
 
 Open project in your browser at <http://localhost:8888/>
 
@@ -59,7 +65,3 @@ To log into the application and open the chatroom, you need to input the correct
 >
 >Username: David <br>
 Password: 123
-
-## **Plagiarism Form**
-
-![alt text](https://github.com/LaraCassandra/mean-term-2/blob/master/PlagiarismForm.jpg "Plagiarism form")
