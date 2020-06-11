@@ -4,6 +4,8 @@ ___
 
 ## **Introduction**
 
+Hi there! :smiley:
+
 This is a basic chatroom application made using NodeJS, making use of Socket.io, Nodemon and MomentJS. This application consists of a login page and a chatroom. 
 
 This project assumes you have NodeJS and NPM. Before beginning, please make sure you have NPM and NodeJS correctly installed. 
@@ -57,3 +59,7 @@ To log into the application and open the chatroom, you need to input the correct
 >
 >Username: David <br>
 Password: 123
+
+## **Plagiarism Form**
+
+![alt text](https://github.com/LaraCassandra/mean-term-2/blob/master/PlagiarismForm.jpg "Plagiarism form")

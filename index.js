@@ -221,7 +221,6 @@ const listLoginUsers = (loggedUser) => {
           </li>`;
   }
   return list;
-  location.reload();
 };
 
 //

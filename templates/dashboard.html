@@ -137,7 +137,7 @@
         Search
       </button>
       <div class="userList">
-        <h4 class="user">Users</h4>
+        <h4 class="user">Users in Chat:</h4>
         <ul style="list-style: none;">
           ${loggedUser}
         </ul>
@@ -157,6 +157,7 @@
           class="form-control textBox"
           id="message"
           placeholder="Enter your message"
+          onfocus="this.value=''"
         />
       </div>
       <button onclick="sendMsg()" class="btn btn-primary sendbtn">
